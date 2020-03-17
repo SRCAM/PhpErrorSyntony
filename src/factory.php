@@ -60,10 +60,12 @@ class factory
         $class = new $classSpace($error);
         $handler = $class->handler();
         //如果错误无需处理
+
+        
         if (!$handler) {
             return false;
         }
-        
+
     }
 
     /**
