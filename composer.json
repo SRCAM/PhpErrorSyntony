@@ -1,0 +1,24 @@
+{
+    "name": "saber/error-transmitting",
+    "description":"错误信息回报系统",
+    "authors": [
+        {
+            "name": "Ke Zhang",
+            "email": "350224276@qq.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^6.5",
+        "php": ">=7.0"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master"
+    },
+    "minimum-stability": "dev",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "ErrorTransmitting\\": "src/"
+        }
+    }
+}
