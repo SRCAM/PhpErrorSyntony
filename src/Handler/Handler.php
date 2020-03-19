@@ -34,10 +34,10 @@ abstract class Handler
      * 特殊异常处理
      */
     abstract public function handler();
-    //获取返回数据
     abstract public function getResponse();
-
-
+    abstract public function getUrl();
+    abstract public function getCookie();
+    abstract public function getHeader();
     public function __construct($error)
     {
         $this->error = $error;

@@ -63,14 +63,15 @@ class Factory
         } else {
             throw new NotErrorException('暂不支持该框架');
         }
-        /**
-         * @package \ErrorTransmitting\Handler\handler
-         */
+
         $classSpace = __NAMESPACE__ . '\\Handler\\' . ucfirst($frame);
         if (!class_exists($classSpace)) {
             throw new NotErrorException('暂不支持该框架: ');
         }
-
+        /**
+         * @package \ErrorTransmitting\Handler\handler
+         * @see \ErrorTransmitting\Handler\handler
+         */
         $class = new $classSpace($error);
         $handler = $class->handler();
         //如果错误无需处理
@@ -85,12 +86,13 @@ class Factory
         $data['code'] = $class->getCode();
         $data['line'] = $class->getLine();
         $data['message'] = $class->getMessage();
-        //数组去空
-        $data = array_filter($data);
+        $data['url'] = $class->getUrl();
+        $data['cookie'] = $class->getCookie();
+        $data['header'] = $class->getHeader();
         //发送请求
         $this->http($data);
 
-        $this->error = $data['error'];
+        $this->error = $data;
         return true;
     }
 
@@ -108,7 +110,10 @@ class Factory
         }
         $client = new \GuzzleHttp\Client(['verify' => false]);
         //异步请求
-        $client->requestAsync('POST', $config['url'], $data);
+        $form_params = [
+            'form_params' => $data,
+        ];
+        $client->request('POST', $config['url'], $form_params);
 
     }
 

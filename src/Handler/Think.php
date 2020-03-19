@@ -12,7 +12,6 @@ namespace ErrorTransmitting\Handler;
 
 class Think extends Handler
 {
-
     /**
      * 错误处理
      * @return bool
@@ -62,4 +61,18 @@ class Think extends Handler
         return \response()->getData();
     }
 
+    public function getUrl()
+    {
+        return \request()->url();
+    }
+
+    public function getCookie()
+    {
+        return \request()->cookie();
+    }
+
+    public function getHeader()
+    {
+        return \request()->header();
+    }
 }
