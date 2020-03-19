@@ -28,15 +28,18 @@ abstract class handler
 
     protected $visible;
 
-    /**
-     * 获取请求数据
-     */
-    abstract public function getRequest();
 
     /**
      * 获取返回数据
      */
-    abstract public function getResponse();
+    abstract public function getParam();
+
+    /**
+     * 特殊异常处理
+     */
+    abstract public function handler();
+
+//    abstract public function
 
     public function __construct($error)
     {
@@ -82,11 +85,6 @@ abstract class handler
         }
         return $this->visible;
     }
-
-    /**
-     * 特殊异常处理
-     */
-    abstract public function handler();
 
     /**
      * 转化为json

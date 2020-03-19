@@ -4,9 +4,14 @@
 namespace ErrorTransmitting;
 
 use ErrorTransmitting\Exception\NotErrorException;
+use ErrorTransmitting\Exception\NotFindConfigException;
 
 class factory
 {
+
+    private $error;
+
+    private static $instance;
 
     /**
      * Client constructor.
@@ -15,7 +20,6 @@ class factory
     private function __construct($config = [])
     {
         $this->config = $config;
-        $client = new \GuzzleHttp\Client();
     }
 
     /**
@@ -36,14 +40,16 @@ class factory
         return $this->config;
     }
 
-    public static function create()
+    public static function create($config)
     {
-
+        if (!self::$instance instanceof self) {
+            self::$instance = new self($config);
+        }
+        return self::$instance;
     }
 
     public function handler($error)
     {
-//获取框架信息,tp框架
         $frame = '';
         if (class_exists(think\App::class)) {
             $frame = 'think';
@@ -57,23 +63,44 @@ class factory
         if (!class_exists($classSpace)) {
             throw new NotErrorException('暂不支持该框架: ');
         }
+
         $class = new $classSpace($error);
         $handler = $class->handler();
         //如果错误无需处理
-
-        
         if (!$handler) {
             return false;
         }
+        $data['param'] = $class->getParam();
+        $data['response'] = $class->getResponse();
+        $data['error'] = $class->toArray();
+        $this->error = $data['error'];
+        $this->http($data);
+        return true;
+    }
+
+    /**
+     * http 请求
+     */
+    private function http($data)
+    {
+        $config = $this->config;
+        if (!$config) {
+            throw new NotFindConfigException('未找到配置');
+        }
+        if (!isset($config['url'])) {
+            throw new NotFindConfigException('未找到配置');
+        }
+        $client = new \GuzzleHttp\Client(['verify' => false]);
+        //异步请求
+        $client->requestAsync('POST', $config['url'], $data);
 
     }
 
     /**
      * 错误信息
      */
-    public function catchError($error)
+    public function getError()
     {
-
-
+        return $this->error;
     }
 }

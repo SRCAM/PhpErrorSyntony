@@ -45,11 +45,10 @@ class think extends handler
     /**
      * @inheritDoc
      */
-    public function getRequest()
+    public function getParam()
     {
         return request()->param();
     }
-
     /**
      * @inheritDoc
      */
@@ -57,4 +56,5 @@ class think extends handler
     {
        return  response()->getData();
     }
+
 }
