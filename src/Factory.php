@@ -78,21 +78,33 @@ class Factory
         if (!$handler) {
             return false;
         }
+
         $data['param'] = $class->getParam();
+
         $data['response'] = $class->getResponse();
         $data['sql_error'] = $class->getPdoError();
+
         $data['file'] = $class->getFile();
         $data['file'] = $class->getFile();
+
         $data['code'] = $class->getCode();
         $data['line'] = $class->getLine();
+
         $data['message'] = $class->getMessage();
+
         $data['url'] = $class->getUrl();
+
         $data['cookie'] = $class->getCookie();
+
         $data['header'] = $class->getHeader();
+        $data['method'] = $class->getMethod();
+
+
+
         //发送请求
         $this->http($data);
-
         $this->error = $data;
+
         return true;
     }
 
@@ -113,8 +125,8 @@ class Factory
         $form_params = [
             'form_params' => $data,
         ];
-        $client->request('POST', $config['url'], $form_params);
 
+        $analytics= $client->request('POST', $config['url'], $form_params);
     }
 
     /**

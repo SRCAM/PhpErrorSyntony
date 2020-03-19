@@ -17,7 +17,7 @@ use ErrorTransmitting\Exception\NotErrorException;
 abstract class Handler
 {
     /**
-     * @var  \Exception 错误类型
+     * @var  \think\Exception 错误类型
      */
     protected $error;
     /**
@@ -34,10 +34,17 @@ abstract class Handler
      * 特殊异常处理
      */
     abstract public function handler();
+
     abstract public function getResponse();
+
     abstract public function getUrl();
+
     abstract public function getCookie();
+
     abstract public function getHeader();
+
+    abstract public function getMethod();
+
     public function __construct($error)
     {
         $this->error = $error;
@@ -90,7 +97,7 @@ abstract class Handler
      */
     public function getCode()
     {
-        return $this->error->getCode();
+        return $this->error->getCode()?$this->error->getCode():500;
     }
 
     public function getLine()

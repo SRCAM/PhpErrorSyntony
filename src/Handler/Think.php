@@ -41,6 +41,7 @@ class Think extends Handler
             $data = $error->getData();
             $this->pdoError = $data;
         }
+
         //同一消息处理
         return true;
     }
@@ -58,12 +59,18 @@ class Think extends Handler
      */
     public function getResponse()
     {
-        return \response()->getData();
+        $hd = new \think\exception\Handle();
+        $erorrRender = $hd->render($this->error);
+        return $erorrRender->getData();
     }
 
     public function getUrl()
     {
         return \request()->url();
+    }
+    public function getMethod()
+    {
+        return \request()->method();
     }
 
     public function getCookie()
