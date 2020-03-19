@@ -23,8 +23,7 @@ abstract class Handler
     /**
      * @var array 其他异常错误保存
      */
-    protected $otherError;
-    protected $visible;
+    protected $pdoError;
 
     /**
      * 获取返回数据
