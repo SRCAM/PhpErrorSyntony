@@ -58,7 +58,7 @@ class Factory
     public function handler($error)
     {
         $frame = '';
-        if (class_exists(think\App::class)) {
+        if (class_exists(\think\App::class)) {
             $frame = 'think';
         } else {
             throw new NotErrorException('暂不支持该框架');
