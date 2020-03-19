@@ -28,19 +28,19 @@ class Think extends Handler
         if ($error instanceof \think\Exception\DbException) {
             //db数据库异常
             $data = $error->getData();
-            $this->otherError = $data;
+            $this->pdoError = $data;
         } else if ($error instanceof \think\db\exception\DbException) {
             //db异常 6.0
             $data = $error->getData();
-            $this->otherError = $data;
+            $this->pdoError = $data;
 
         } else if ($error instanceof \think\db\exception\PDOException) {
             $data = $error->getData();
-            $this->otherError = $data;
+            $this->pdoError = $data;
 
         } else if ($error instanceof \think\Exception\PDOException) {
             $data = $error->getData();
-            $this->otherError = $data;
+            $this->pdoError = $data;
         }
         //同一消息处理
         return true;
