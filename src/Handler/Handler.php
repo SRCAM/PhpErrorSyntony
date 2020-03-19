@@ -14,20 +14,17 @@ namespace ErrorTransmitting\Handler;
 
 use ErrorTransmitting\Exception\NotErrorException;
 
-abstract class handler
+abstract class Handler
 {
     /**
      * @var  \Exception 错误类型
      */
     protected $error;
-
     /**
      * @var array 其他异常错误保存
      */
     protected $otherError;
-
     protected $visible;
-
 
     /**
      * 获取返回数据
@@ -38,15 +35,15 @@ abstract class handler
      * 特殊异常处理
      */
     abstract public function handler();
+    //获取返回数据
+    abstract public function getResponse();
 
-//    abstract public function
 
     public function __construct($error)
     {
         $this->error = $error;
         //检查是否是异常类
         $this->isError($this->error);
-
     }
 
     /**
@@ -71,28 +68,40 @@ abstract class handler
     }
 
     /**
-     * 转化为array
-     * @return mixed
+     * 返回错误信息
+     * @return array array
      */
-    public function toArray()
+    public function getPdoError()
     {
-        //将数组转化为
-        foreach ($this->error as $key => $val) {
-            $this->visible[$key] = $val;
-        }
-        if (!empty($this->otherError)) {
-            array_pop($this->visible, $this->otherError);
-        }
-        return $this->visible;
+        return $this->pdoError;
     }
 
     /**
-     * 转化为json
-     * @return false|string
+     * 获取文件名称
+     * @return string
      */
-    public function toJson()
+    public function getFile()
     {
-        return json_encode($this->toArray(), JSON_HEX_AMP);
+        return $this->error->getFile();
+    }
+
+    /**
+     * 错误code
+     * @return int|mixed
+     */
+    public function getCode()
+    {
+        return $this->error->getCode();
+    }
+
+    public function getLine()
+    {
+        return $this->error->getLine();
+    }
+
+    public function getMessage()
+    {
+        return $this->error->getMessage();
     }
 
 }

@@ -10,51 +10,56 @@
 
 namespace ErrorTransmitting\Handler;
 
-class Think extends handler
+class Think extends Handler
 {
 
-    //处理
+    /**
+     * 错误处理
+     * @return bool
+     */
     public function handler()
     {
         $error = $this->error;
         //检测是否属于不需要捕获的异常
-        if ($error instanceof think\exception\RouteNotFoundException) {
+        if ($error instanceof \think\exception\RouteNotFoundException) {
             return false;
         }
         //db异常 5.1
-        if ($error instanceof think\Exception\DbException) {
+        if ($error instanceof \think\Exception\DbException) {
             //db数据库异常
-            $data = ($error->getData())['Database Status'];
-            $this->otherError = is_array($data) ? json_encode($data, JSON_HEX_AMP) : $data;
-        } else if ($error instanceof think\db\exception\DbException) {
+            $data = $error->getData();
+            $this->otherError = $data;
+        } else if ($error instanceof \think\db\exception\DbException) {
             //db异常 6.0
-            $data = ($error->getData())['Database Status'];
-            $this->otherError = $data ? json_encode($data, JSON_HEX_AMP) : $data;
+            $data = $error->getData();
+            $this->otherError = $data;
 
-        } else if ($error instanceof think\db\exception\PDOException) {
-            $data = ($error->getData())['PDO Error Info'];
-            $this->otherError = $data ? json_encode($data, JSON_HEX_AMP) : $data;
+        } else if ($error instanceof \think\db\exception\PDOException) {
+            $data = $error->getData();
+            $this->otherError = $data;
 
-        } else if ($error instanceof think\Exception\PDOException) {
-            $data = ($error->getData())['PDO Error Info'];
-            $this->otherError = $data ? json_encode($data, JSON_HEX_AMP) : $data;
+        } else if ($error instanceof \think\Exception\PDOException) {
+            $data = $error->getData();
+            $this->otherError = $data;
         }
         //同一消息处理
         return true;
     }
+
     /**
      * @inheritDoc
      */
     public function getParam()
     {
-        return request()->param();
+        return \request()->param();
     }
+
     /**
      * @inheritDoc
      */
     public function getResponse()
     {
-       return  response()->getData();
+        return \response()->getData();
     }
 
 }

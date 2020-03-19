@@ -6,7 +6,7 @@ namespace ErrorTransmitting;
 use ErrorTransmitting\Exception\NotErrorException;
 use ErrorTransmitting\Exception\NotFindConfigException;
 
-class factory
+class Factory
 {
 
     private $error;
@@ -48,6 +48,13 @@ class factory
         return self::$instance;
     }
 
+    /**
+     * 错误
+     * @param $error
+     * @return bool
+     * @throws NotErrorException
+     * @throws NotFindConfigException
+     */
     public function handler($error)
     {
         $frame = '';
@@ -72,9 +79,18 @@ class factory
         }
         $data['param'] = $class->getParam();
         $data['response'] = $class->getResponse();
-        $data['error'] = $class->toArray();
-        $this->error = $data['error'];
+        $data['sql_error'] = $class->getPdoError();
+        $data['file'] = $class->getFile();
+        $data['file'] = $class->getFile();
+        $data['code'] = $class->getCode();
+        $data['line'] = $class->getLine();
+        $data['message'] = $class->getMessage();
+        //数组去空
+        $data = array_filter($data);
+        //发送请求
         $this->http($data);
+
+        $this->error = $data['error'];
         return true;
     }
 
