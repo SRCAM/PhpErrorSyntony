@@ -51,60 +51,54 @@ class Factory
     /**
      * 错误
      * @param $error
-     * @return bool
-     * @throws NotErrorException
-     * @throws NotFindConfigException
+     * @throws Exception\DriveNotFindException
      */
     public function handler($error)
     {
-        $frame = '';
-        if (class_exists(\think\App::class)) {
-            $frame = 'think';
-        } else {
-            throw new NotErrorException('暂不支持该框架');
-        }
 
-        $classSpace = __NAMESPACE__ . '\\Handler\\' . ucfirst($frame);
-        if (!class_exists($classSpace)) {
-            throw new NotErrorException('暂不支持该框架: ');
-        }
-        /**
-         * @package \ErrorTransmitting\Handler\handler
-         * @see \ErrorTransmitting\Handler\handler
-         */
-        $class = new $classSpace($error);
-        $handler = $class->handler();
-        //如果错误无需处理
-        if (!$handler) {
-            return false;
-        }
+        //获取框架信息
+        $framework = GetFramework::create()->get();
+        //处理错误信息
+        $framework->handler();
+        //获取错误信息集
+        $framework->toArray();
 
-        $data['param'] = $class->getParam();
-
-        $data['response'] = $class->getResponse();
-        $data['sql_error'] = $class->getPdoError();
-
-        $data['file'] = $class->getFile();
-        $data['file'] = $class->getFile();
-
-        $data['code'] = $class->getCode();
-        $data['line'] = $class->getLine();
-
-        $data['message'] = $class->getMessage();
-
-        $data['url'] = $class->getUrl();
-
-        $data['cookie'] = $class->getCookie();
-
-        $data['header'] = $class->getHeader();
-        $data['method'] = $class->getMethod();
-
-
-        //发送请求
-        $this->http($data);
-        $this->error = $data;
-
-        return true;
+//        $frame = '';
+//        if (class_exists(\think\App::class)) {
+//            $frame = 'think';
+//        } else {
+//            throw new NotErrorException('暂不支持该框架');
+//        }
+//        $classSpace = __NAMESPACE__ . '\\Handler\\' . ucfirst($frame);
+//        if (!class_exists($classSpace)) {
+//            throw new NotErrorException('暂不支持该框架: ');
+//        }
+//        /**
+//         * @package \ErrorTransmitting\Handler\handler
+//         * @see \ErrorTransmitting\Handler\handler
+//         */
+//        $class = new $classSpace($error);
+//        $handler = $class->handler();
+//        //如果错误无需处理
+//        if (!$handler) {
+//            return false;
+//        }
+//        $data['param'] = $class->getParam();
+//        $data['response'] = $class->getResponse();
+//        $data['sql_error'] = $class->getPdoError();
+//        $data['file'] = $class->getFile();
+//        $data['file'] = $class->getFile();
+//        $data['code'] = $class->getCode();
+//        $data['line'] = $class->getLine();
+//        $data['message'] = $class->getMessage();
+//        $data['url'] = $class->getUrl();
+//        $data['cookie'] = $class->getCookie();
+//        $data['header'] = $class->getHeader();
+//        $data['method'] = $class->getMethod();
+//        //发送请求
+//        $this->http($data);
+//        $this->error = $data;
+//        return true;
     }
 
     /**
@@ -125,13 +119,12 @@ class Factory
             'form_params' => $data,
         ];
 
-
         try {
             $analytics = $client->request('POST', $config['url'], $form_params);
-
         } catch (\GuzzleHttp\Exception\ClientException $exception) {
 
         } catch (\GuzzleHttp\Exception\RequestException $exception) {
+
         }
     }
 

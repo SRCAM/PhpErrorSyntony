@@ -10,7 +10,7 @@
 
 namespace ErrorTransmitting\Handler;
 
-class Think extends Handler
+class Think5 extends Handler
 {
     /**
      * 错误处理
