@@ -64,14 +64,13 @@ class Factory
         return $this->config;
     }
 
-    public static function create($config)
+    public static function create($config = '')
     {
         if (!self::$instance instanceof self) {
             self::$instance = new self($config);
         }
         return self::$instance;
     }
-
 
     /**
      * 捕获数据
@@ -83,6 +82,7 @@ class Factory
     {
         //获取框架信息
         $this->framework = GetFramework::create()->get();
+
         //处理错误信息
         $this->framework->setError($error)->handler();
         //获取错误信息集
