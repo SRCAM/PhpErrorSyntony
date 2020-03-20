@@ -100,7 +100,6 @@ class Factory
         $data['method'] = $class->getMethod();
 
 
-
         //发送请求
         $this->http($data);
         $this->error = $data;
@@ -126,7 +125,14 @@ class Factory
             'form_params' => $data,
         ];
 
-        $analytics= $client->request('POST', $config['url'], $form_params);
+
+        try {
+            $analytics = $client->request('POST', $config['url'], $form_params);
+
+        } catch (\GuzzleHttp\Exception\ClientException $exception) {
+
+        } catch (\GuzzleHttp\Exception\RequestException $exception) {
+        }
     }
 
     /**
