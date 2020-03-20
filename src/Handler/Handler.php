@@ -112,16 +112,21 @@ abstract class Handler
         return $this->error->getCode() ? $this->error->getCode() : 500;
     }
 
+    /**
+     * @return int
+     */
     public function getLine()
     {
         return $this->error->getLine();
     }
 
+    /**
+     * @return string
+     */
     public function getMessage()
     {
         return $this->error->getMessage();
     }
-
     /**
      *
      */

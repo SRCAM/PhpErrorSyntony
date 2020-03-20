@@ -8,10 +8,11 @@ use ErrorTransmitting\Exception\NotFindConfigException;
 
 class Factory
 {
-
+    //错误类型
     private $error;
-
+    //实例化
     private static $instance;
+
 
     /**
      * Client constructor.
@@ -25,10 +26,12 @@ class Factory
     /**
      * 捕设置配置文件
      * @param $config
+     * @return Factory
      */
     public function setConfig($config)
     {
         $this->config = $config;
+        return $this;
     }
 
     /**

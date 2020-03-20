@@ -45,7 +45,7 @@ class Think5 extends Handler
         //同一消息处理
         return true;
     }
-
+    
     /**
      * @inheritDoc
      */
