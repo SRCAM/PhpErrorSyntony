@@ -36,6 +36,7 @@ class Dispatch
         if (!isset($http['url'])) {
             throw new NotFindConfigException('http.url config not find ');
         }
+
         if (!isset($http['method'])) {
             throw new NotFindConfigException('http.url config not find ');
         }
