@@ -21,6 +21,7 @@ class Factory
     private $framework;
 
     /**
+     * 基础配置
      * @var array 配置文件
      */
     private $config = [
@@ -82,47 +83,10 @@ class Factory
     {
         //获取框架信息
         $this->framework = GetFramework::create()->get();
-
         //处理错误信息
         $this->framework->setError($error)->handler();
         //获取错误信息集
         $this->data = $this->framework->toArray();
-
         return new Dispatch($this->data, $this->config);
-    }
-
-
-    /**
-     * http 请求
-     */
-    private function http($data)
-    {
-        $config = $this->config;
-        if (!$config) {
-            throw new NotFindConfigException('未找到配置');
-        }
-        if (!isset($config['url'])) {
-            throw new NotFindConfigException('未找到配置');
-        }
-        $client = new \GuzzleHttp\Client(['verify' => false]);
-        //异步请求
-        $form_params = [
-            'form_params' => $data,
-        ];
-        try {
-            $analytics = $client->request('POST', $config['url'], $form_params);
-        } catch (\GuzzleHttp\Exception\ClientException $exception) {
-
-        } catch (\GuzzleHttp\Exception\RequestException $exception) {
-
-        }
-    }
-
-    /**
-     * 错误信息
-     */
-    public function getError()
-    {
-        return $this->error;
     }
 }

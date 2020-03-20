@@ -13,11 +13,8 @@ class Think implements DriveInterFace
         'Think5' => Think5::class,
         'Think6' => Think6::class,
     ];
-
-    private $version;
-    private $pre_ = 'Think';
-
-
+    private $version; //框架版本号
+    private $pre_ = 'Think'; //框架别名
 
     /**
      * 加载方法
@@ -37,6 +34,4 @@ class Think implements DriveInterFace
         $class = new $classSpace();
         return $class;
     }
-
-
 }

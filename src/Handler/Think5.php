@@ -10,6 +10,11 @@
 
 namespace ErrorTransmitting\Handler;
 
+/**
+ * tp5 框架处理方法
+ * Class Think5
+ * @package ErrorTransmitting\Handler
+ */
 class Think5 extends Handler
 {
 

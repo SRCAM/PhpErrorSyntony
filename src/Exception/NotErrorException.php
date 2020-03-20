@@ -12,6 +12,11 @@
 namespace ErrorTransmitting\Exception;
 
 
+/**
+ * 不是异常处理类
+ * Class NotErrorException
+ * @package ErrorTransmitting\Exception
+ */
 class NotErrorException extends \Exception
 {
 

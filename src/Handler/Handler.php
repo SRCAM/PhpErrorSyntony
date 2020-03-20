@@ -15,6 +15,11 @@ namespace ErrorTransmitting\Handler;
 use ErrorTransmitting\Exception\NotErrorException;
 use ErrorTransmitting\ExceptionEcho;
 
+/**
+ * 处理方法的基类
+ * Class Handler
+ * @package ErrorTransmitting\Handler
+ */
 abstract class Handler
 {
     /**
@@ -124,6 +129,7 @@ abstract class Handler
     {
         return $this->error->getCode() ? $this->error->getCode() : 500;
     }
+
     /**
      * @return int
      */
@@ -139,6 +145,7 @@ abstract class Handler
     {
         return $this->error->getMessage();
     }
+
     /**
      *
      */

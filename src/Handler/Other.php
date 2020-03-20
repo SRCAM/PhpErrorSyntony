@@ -4,6 +4,11 @@
 namespace ErrorTransmitting\Handler;
 
 
+/**
+ * 其他框架通用处理方法
+ * Class Other
+ * @package ErrorTransmitting\Handler
+ */
 class Other extends Handler
 {
 

@@ -10,8 +10,14 @@
 
 namespace ErrorTransmitting\Handler;
 
+/**
+ * tp6 框架处理方法
+ * Class Think6
+ * @package ErrorTransmitting\Handler
+ */
 class Think6 extends Handler
 {
+
     /**
      * 错误处理
      * @return bool
