@@ -10,9 +10,8 @@
 
 namespace ErrorTransmitting\Handler;
 
-class Think5 extends Handler
+class Think6 extends Handler
 {
-
     /**
      * 错误处理
      * @return bool
@@ -20,17 +19,17 @@ class Think5 extends Handler
      */
     public function handler()
     {
+        //检查是否是继承与Exception
         $this->isError($this->error);
+
         //检测是否属于不需要捕获的异常
         if ($this->error instanceof \think\exception\RouteNotFoundException) {
             return false;
         }
-        //db异常 5.1
-        if ($this->error instanceof \think\Exception\DbException) {
-            //db数据库异常
+        if ($this->error instanceof \think\db\exception\DbException) {
             $data = $this->error->getData();
             $this->pdoError = $data;
-        } else if ($this->error instanceof \think\Exception\PDOException) {
+        } else if ($this->error instanceof \think\db\exception\PDOException) {
             $data = $this->error->getData();
             $this->pdoError = $data;
         }

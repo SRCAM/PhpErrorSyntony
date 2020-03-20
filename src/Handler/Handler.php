@@ -66,11 +66,21 @@ abstract class Handler
      */
     abstract public function getMethod();
 
-    public function __construct($error)
+    public function __construct($error = [])
     {
         $this->error = $error;
         //检查是否是异常类
-        $this->isError($this->error);
+    }
+
+    /**
+     * 设置错误
+     * @param $error
+     * @return $this
+     */
+    public function setError($error)
+    {
+        $this->error = $error;
+        return $this;
     }
 
     /**
@@ -78,9 +88,12 @@ abstract class Handler
      * @param $error
      * @throws NotErrorException
      */
-    protected function isError($error)
+    protected function isError()
     {
-        if (!$error instanceof \Exception) {
+        if (!$this->error) {
+            throw new NotErrorException('this class not !Exception');
+        }
+        if (!$this->error instanceof \Exception) {
             throw new NotErrorException('this class not !Exception');
         }
     }
@@ -111,7 +124,6 @@ abstract class Handler
     {
         return $this->error->getCode() ? $this->error->getCode() : 500;
     }
-
     /**
      * @return int
      */

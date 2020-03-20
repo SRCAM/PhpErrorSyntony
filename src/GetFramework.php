@@ -4,18 +4,20 @@
 namespace ErrorTransmitting;
 
 
+use ErrorTransmitting\Drive\Think;
 use ErrorTransmitting\Exception\DriveNotFindException;
 use ErrorTransmitting\Handler\Handler;
-use think\Loader;
 
 class GetFramework
 {
 
+    private $drive = [
+        'Think' => Think::class
+    ];
     //框架名称
     private $frameworkName;
     //框架核心组件
     private $framework;
-
     private static $instance;
 
     private function __construct()
@@ -48,19 +50,17 @@ class GetFramework
     {
         //查询是否是thinkphp 框架
         if (class_exists(\think\App::class)) {
-            $this->frameworkName = 'think';
+            $this->frameworkName = 'Think';
             $this->framework = \think\App::class;
         }
-        //拼接命名空间
-        $classSpace = __NAMESPACE__ . '\\Drive\\' . ucfirst($this->frameworkName);
-        //如果没有找到框架驱动
-        if (!class_exists($classSpace)) {
-            throw new DriveNotFindException($classSpace . ': not find drive');
+        if (!isset($this->drive[$this->frameworkName])) {
+            throw new DriveNotFindException(' not find drive');
+        } else {
+            $classSpace = $this->drive[$this->frameworkName];
         }
         //加载框架驱动
         $classSpace = new $classSpace();
-        $framework = $classSpace->loade($this->framework);
-
+        $framework = $classSpace->load($this->framework);
         return $framework;
     }
 }

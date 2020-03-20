@@ -3,6 +3,8 @@
 
 namespace ErrorTransmitting;
 
+use ErrorTransmitting\Exception\DriveNotFindException;
+use ErrorTransmitting\Exception\HandlerNotFindException;
 use ErrorTransmitting\Exception\NotErrorException;
 use ErrorTransmitting\Exception\NotFindConfigException;
 
@@ -13,6 +15,9 @@ class Factory
     //实例化
     private static $instance;
 
+    private $data;
+
+    private $framework;
 
     /**
      * Client constructor.
@@ -58,50 +63,20 @@ class Factory
      */
     public function handler($error)
     {
+        try {
+            //获取框架信息
+            $this->framework = GetFramework::create()->get();
+            //处理错误信息
+            $this->framework->setError($error)->handler();
+            //获取错误信息集
+            $this->data = $this->framework->toArray();
 
-        //获取框架信息
-        $framework = GetFramework::create()->get();
-        //处理错误信息
-        $framework->handler();
-        //获取错误信息集
-        $framework->toArray();
+        }catch (DriveNotFindException $exception){
 
-//        $frame = '';
-//        if (class_exists(\think\App::class)) {
-//            $frame = 'think';
-//        } else {
-//            throw new NotErrorException('暂不支持该框架');
-//        }
-//        $classSpace = __NAMESPACE__ . '\\Handler\\' . ucfirst($frame);
-//        if (!class_exists($classSpace)) {
-//            throw new NotErrorException('暂不支持该框架: ');
-//        }
-//        /**
-//         * @package \ErrorTransmitting\Handler\handler
-//         * @see \ErrorTransmitting\Handler\handler
-//         */
-//        $class = new $classSpace($error);
-//        $handler = $class->handler();
-//        //如果错误无需处理
-//        if (!$handler) {
-//            return false;
-//        }
-//        $data['param'] = $class->getParam();
-//        $data['response'] = $class->getResponse();
-//        $data['sql_error'] = $class->getPdoError();
-//        $data['file'] = $class->getFile();
-//        $data['file'] = $class->getFile();
-//        $data['code'] = $class->getCode();
-//        $data['line'] = $class->getLine();
-//        $data['message'] = $class->getMessage();
-//        $data['url'] = $class->getUrl();
-//        $data['cookie'] = $class->getCookie();
-//        $data['header'] = $class->getHeader();
-//        $data['method'] = $class->getMethod();
-//        //发送请求
-//        $this->http($data);
-//        $this->error = $data;
-//        return true;
+        }catch (HandlerNotFindException $exception){
+
+        }
+
     }
 
     /**

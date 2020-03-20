@@ -1,10 +1,10 @@
 <?php
 
 
-namespace ErrorTransmitting\Exception;
+namespace ErrorTransmitting\Drive;
 
 
 interface DriveInterFace
 {
-    public function loade($class);
+    public function load($class);
 }
