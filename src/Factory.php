@@ -7,6 +7,7 @@ use ErrorTransmitting\Exception\DriveNotFindException;
 use ErrorTransmitting\Exception\HandlerNotFindException;
 use ErrorTransmitting\Exception\NotErrorException;
 use ErrorTransmitting\Exception\NotFindConfigException;
+use ErrorTransmitting\Handler\Other;
 
 class Factory
 {
@@ -18,6 +19,21 @@ class Factory
     private $data;
 
     private $framework;
+
+    /**
+     * @var array 配置文件
+     */
+    private $config = [
+
+        'http' => [
+            'url' => '',
+            'method' => ''
+        ],
+
+        'emall' => [
+
+        ]
+    ];
 
     /**
      * Client constructor.
@@ -56,28 +72,25 @@ class Factory
         return self::$instance;
     }
 
+
     /**
-     * 错误
+     * 捕获数据
      * @param $error
-     * @throws Exception\DriveNotFindException
+     * @return Dispatch
+     * @throws DriveNotFindException
      */
     public function handler($error)
     {
-        try {
-            //获取框架信息
-            $this->framework = GetFramework::create()->get();
-            //处理错误信息
-            $this->framework->setError($error)->handler();
-            //获取错误信息集
-            $this->data = $this->framework->toArray();
+        //获取框架信息
+        $this->framework = GetFramework::create()->get();
+        //处理错误信息
+        $this->framework->setError($error)->handler();
+        //获取错误信息集
+        $this->data = $this->framework->toArray();
 
-        }catch (DriveNotFindException $exception){
-
-        }catch (HandlerNotFindException $exception){
-
-        }
-
+        return new Dispatch($this->data, $this->config);
     }
+
 
     /**
      * http 请求
@@ -96,7 +109,6 @@ class Factory
         $form_params = [
             'form_params' => $data,
         ];
-
         try {
             $analytics = $client->request('POST', $config['url'], $form_params);
         } catch (\GuzzleHttp\Exception\ClientException $exception) {

@@ -7,6 +7,7 @@ namespace ErrorTransmitting;
 use ErrorTransmitting\Drive\Think;
 use ErrorTransmitting\Exception\DriveNotFindException;
 use ErrorTransmitting\Handler\Handler;
+use ErrorTransmitting\Handler\Other;
 
 class GetFramework
 {
@@ -44,7 +45,8 @@ class GetFramework
     }
 
     /**
-     *  判断框架的大体类型
+     * 判断框架的大体类型 /
+     * @return Handler;
      */
     private function searchFramework()
     {
@@ -53,8 +55,9 @@ class GetFramework
             $this->frameworkName = 'Think';
             $this->framework = \think\App::class;
         }
+        //如果没有可以预处理的框架
         if (!isset($this->drive[$this->frameworkName])) {
-            throw new DriveNotFindException(' not find drive');
+            return new Other();
         } else {
             $classSpace = $this->drive[$this->frameworkName];
         }
