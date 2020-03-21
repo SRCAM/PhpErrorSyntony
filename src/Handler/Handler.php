@@ -12,7 +12,9 @@
 namespace Syntony\Handler;
 
 
+use syntony\Exception\HandlerError;
 use Syntony\Exception\NotErrorException;
+use Syntony\Exception\NotFindConfigException;
 
 
 /**
@@ -22,6 +24,9 @@ use Syntony\Exception\NotErrorException;
  */
 abstract class Handler
 {
+
+    //配置文件
+    protected $config;
     /**
      * @var  \Exception 错误类型
      */
@@ -31,51 +36,41 @@ abstract class Handler
      */
     protected $pdoError;
 
-    /**
-     * 获取返回数据
-     */
-    abstract public function getParam();
-
-    /**
-     * 特殊异常处理
-     */
-    abstract public function handler();
 
     /**
      * 获取返回数据
+     */
+    abstract protected function getParam();
+
+    /**
+     * 框架内部自我处理
      * @return mixed
      */
-    abstract public function getResponse();
+    abstract protected function selfHandler();
 
     /**
      * 获取url 地址
      * @return mixed
      */
-    abstract public function getUrl();
+    abstract protected function getUrl();
 
     /**
      * 获取cookie
      * @return mixed
      */
-    abstract public function getCookie();
+    abstract protected function getCookie();
 
     /**
      * 获取请求头
      * @return mixed
      */
-    abstract public function getHeader();
+    abstract protected function getHeader();
 
     /**
      * 获取
      * @return mixed
      */
-    abstract public function getMethod();
-
-    public function __construct($error = [])
-    {
-        $this->error = $error;
-        //检查是否是异常类
-    }
+    abstract protected function getMethod();
 
     /**
      * 设置错误
@@ -98,16 +93,23 @@ abstract class Handler
         if (!$this->error) {
             throw new NotErrorException('this class not !Exception');
         }
+
         if (!$this->error instanceof \Exception) {
             throw new NotErrorException('this class not !Exception');
         }
+    }
+
+    public function setConfig($config)
+    {
+        $this->config = $config;
+        return $this;
     }
 
     /**
      * 返回错误信息
      * @return array array
      */
-    public function getPdoError()
+    protected function getPdoError()
     {
         return $this->pdoError;
     }
@@ -116,7 +118,7 @@ abstract class Handler
      * 获取文件名称
      * @return string
      */
-    public function getFile()
+    protected function getFile()
     {
         return $this->error->getFile();
     }
@@ -125,7 +127,7 @@ abstract class Handler
      * 错误code
      * @return int|mixed
      */
-    public function getCode()
+    protected function getCode()
     {
         return $this->error->getCode() ? $this->error->getCode() : 500;
     }
@@ -133,7 +135,7 @@ abstract class Handler
     /**
      * @return int
      */
-    public function getLine()
+    protected function getLine()
     {
         return $this->error->getLine();
     }
@@ -141,9 +143,37 @@ abstract class Handler
     /**
      * @return string
      */
-    public function getMessage()
+    protected function getMessage()
     {
         return $this->error->getMessage();
+    }
+
+    public function handler()
+    {
+        //检查改类是否是错误类
+        $this->isError();
+        //检查配置环境是否一致
+        $this->isConfig();
+        $self = $this->selfHandler();
+        if (!$self) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 获取配置文件信息
+     * @throws NotFindConfigException
+     */
+    protected function isConfig()
+    {
+        //检查config 是否存在
+        if (!$this->config) {
+            throw new NotFindConfigException('config 不存在');
+        }
+        if (!isset($this->config['showType'])) {
+            throw new NotFindConfigException('config.showType not find ');
+        }
     }
 
     /**
@@ -166,6 +196,17 @@ abstract class Handler
     }
 
     /**
+     * 获取错误信息
+     * @return mixed
+     */
+    protected function getResponse()
+    {
+        $show = $this->config['showType'];
+        $handler = new HandlerError();
+        return $handler->$show($this->error);
+    }
+
+    /**
      * 获取接送数据
      * @return mixed
      */
@@ -173,5 +214,4 @@ abstract class Handler
     {
         return json_decode($this->toArray(), JSON_HEX_AMP);
     }
-
 }

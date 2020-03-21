@@ -20,21 +20,6 @@ class Other extends Handler
         return array_merge($_POST, $_GET);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function handler()
-    {
-        return true;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getResponse()
-    {
-        return [];
-    }
 
     /**
      * @inheritDoc
@@ -109,5 +94,13 @@ class Other extends Handler
         }
 
         return $url;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function selfHandler()
+    {
+        return true;
     }
 }

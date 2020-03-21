@@ -11,7 +11,6 @@ use Syntony\Handler\Other;
 
 class GetFramework
 {
-
     private $drive = [
         'Think' => Think::class
     ];
@@ -50,7 +49,8 @@ class GetFramework
      */
     private function searchFramework()
     {
-        //查询是否是thinkphp 框架
+
+        //检查框架是否存在
         if (class_exists(\think\App::class)) {
             $this->frameworkName = 'Think';
             $this->framework = \think\App::class;
@@ -63,7 +63,6 @@ class GetFramework
         }
         //加载框架驱动
         $classSpace = new $classSpace();
-        $framework = $classSpace->load($this->framework);
-        return $framework;
+        return $classSpace->load($this->framework);
     }
 }

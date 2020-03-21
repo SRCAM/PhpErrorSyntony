@@ -19,65 +19,50 @@ class Think6 extends Handler
 {
 
     /**
-     * 错误处理
-     * @return bool
-     * @throws \ErrorTransmitting\Exception\NotErrorException
-     */
-    public function handler()
-    {
-        //检查是否是继承与Exception
-        $this->isError($this->error);
-
-        //检测是否属于不需要捕获的异常
-        if ($this->error instanceof \think\exception\RouteNotFoundException) {
-            return false;
-        }
-        if ($this->error instanceof \think\db\exception\DbException) {
-            $data = $this->error->getData();
-            $this->pdoError = $data;
-        } else if ($this->error instanceof \think\db\exception\PDOException) {
-            $data = $this->error->getData();
-            $this->pdoError = $data;
-        }
-        //同一消息处理
-        return true;
-    }
-
-    /**
      * @inheritDoc
      */
-    public function getParam()
+    protected function getParam()
     {
         return \request()->param();
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getResponse()
-    {
-        $hd = new \think\exception\Handle();
-        $erorrRender = $hd->render($this->error);
-        return $erorrRender->getData();
-    }
-
-    public function getUrl()
+    protected function getUrl()
     {
         return \request()->url();
     }
 
-    public function getMethod()
+    protected function getMethod()
     {
         return \request()->method();
     }
 
-    public function getCookie()
+    protected function getCookie()
     {
         return \request()->cookie();
     }
 
-    public function getHeader()
+    protected function getHeader()
     {
         return \request()->header();
+    }
+
+    /**
+     * 程序自我处理
+     * @return bool
+     */
+    protected function selfHandler()
+    {
+        //检测是否属于不需要捕获的异常
+        if ($this->error instanceof \think\exception\RouteNotFoundException) {
+            return false;
+        }
+        if (
+            $this->error instanceof \think\db\exception\PDOException
+            || $this->error instanceof \think\db\exception\DbException
+        ) {
+            $this->pdoError = $this->error->getData();
+        }
+        //同一消息处理
+        return true;
     }
 }
