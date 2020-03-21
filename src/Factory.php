@@ -84,6 +84,7 @@ class Factory
 
         //获取错误信息集
         $this->data = $this->framework->toArray();
+
         return new Dispatch($this->data, $this->config);
     }
 }

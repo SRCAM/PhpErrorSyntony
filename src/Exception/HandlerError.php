@@ -36,19 +36,20 @@ class HandlerError
      * @param string $show
      * @return false|string
      */
-    public function page(\Exception $exception)
+    public function page($exception)
     {
 
-        $whoops = new Run();
-        $whoops->pushHandler($this->drive['page']);
+
+        $this->whoops->pushHandler(new $this->drive['page'] );
         //阻止直接输出
-        $whoops->allowQuit(false);
+        $this->whoops->allowQuit(false);
+        $this->whoops->sendHttpCode();
         //开启缓冲区
         ob_start();
-        $whoops->handleException($exception);
+        $this->whoops->handleException($exception);
+        ob_end_clean();
         $handler = ob_get_contents();
         //结束缓冲区
-        ob_end_clean();
         return $handler;
     }
 
@@ -57,15 +58,14 @@ class HandlerError
      * @param \Exception $exception
      * @return false|string
      */
-    public function json(\Exception $exception)
+    public function json( $exception)
     {
-        $whoops = new Run();
-        $whoops->pushHandler($this->drive['json']);
+        $this->whoops->pushHandler(new $this->drive['json'] );
         //阻止直接输出
-        $whoops->allowQuit(false);
+        $this->whoops->allowQuit(false);
         //开启缓冲区
         ob_start();
-        $whoops->handleException($exception);
+        $this->whoops->handleException($exception);
         $handler = ob_get_contents();
         //结束缓冲区
         ob_end_clean();

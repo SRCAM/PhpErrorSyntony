@@ -201,8 +201,8 @@ abstract class Handler
      */
     protected function getResponse()
     {
-        $show = $this->config['showType'];
-        $handler = new HandlerError();
+        $show = $this->config['show_type'];
+        $handler = new \Syntony\Exception\HandlerError();
         return $handler->$show($this->error);
     }
 
@@ -214,4 +214,6 @@ abstract class Handler
     {
         return json_decode($this->toArray(), JSON_HEX_AMP);
     }
+
+
 }
