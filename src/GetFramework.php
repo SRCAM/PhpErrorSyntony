@@ -58,9 +58,8 @@ class GetFramework
         //如果没有可以预处理的框架
         if (!isset($this->drive[$this->frameworkName])) {
             return new Other();
-        } else {
-            $classSpace = $this->drive[$this->frameworkName];
         }
+        $classSpace = $this->drive[$this->frameworkName];
         //加载框架驱动
         $classSpace = new $classSpace();
         return $classSpace->load($this->framework);
