@@ -1,7 +1,7 @@
 <?php
 
 
-namespace ErrorTransmitting;
+namespace Syntony;
 
 
 use Syntony\Dispatch\Http;
