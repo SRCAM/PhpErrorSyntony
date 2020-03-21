@@ -8,7 +8,7 @@
  * @version 1.0
  */
 
-namespace ErrorTransmitting\Handler;
+namespace Syntony\Handler;
 
 /**
  * tp5 框架处理方法

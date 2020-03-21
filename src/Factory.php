@@ -3,11 +3,7 @@
 
 namespace ErrorTransmitting;
 
-use ErrorTransmitting\Exception\DriveNotFindException;
-use ErrorTransmitting\Exception\HandlerNotFindException;
-use ErrorTransmitting\Exception\NotErrorException;
-use ErrorTransmitting\Exception\NotFindConfigException;
-use ErrorTransmitting\Handler\Other;
+use Syntony\Exception\DriveNotFindException;
 
 class Factory
 {

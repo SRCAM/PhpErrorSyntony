@@ -1,11 +1,11 @@
 <?php
 
 
-namespace ErrorTransmitting\Drive;
+namespace Syntony\Drive;
 
-use ErrorTransmitting\Exception\HandlerNotFindException;
-use ErrorTransmitting\Handler\Think5;
-use ErrorTransmitting\Handler\Think6;
+use Syntony\Exception\HandlerNotFindException;
+use Syntony\Handler\Think5;
+use Syntony\Handler\Think6;
 
 class Think implements DriveInterFace
 {

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace ErrorTransmitting\Dispatch;
+namespace Syntony\Dispatch;
 
 
 class Emall

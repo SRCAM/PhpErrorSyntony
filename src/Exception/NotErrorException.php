@@ -9,7 +9,7 @@
  */
 
 
-namespace ErrorTransmitting\Exception;
+namespace Syntony\Exception;
 
 
 /**

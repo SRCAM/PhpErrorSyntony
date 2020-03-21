@@ -4,8 +4,8 @@
 namespace ErrorTransmitting;
 
 
-use ErrorTransmitting\Dispatch\Http;
-use ErrorTransmitting\Exception\NotFindConfigException;
+use Syntony\Dispatch\Http;
+use Syntony\Exception\NotFindConfigException;
 
 /**
  * 错误信息发送方法

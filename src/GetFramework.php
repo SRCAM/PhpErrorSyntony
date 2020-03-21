@@ -1,13 +1,13 @@
 <?php
 
 
-namespace ErrorTransmitting;
+namespace Syntony;
 
 
-use ErrorTransmitting\Drive\Think;
-use ErrorTransmitting\Exception\DriveNotFindException;
-use ErrorTransmitting\Handler\Handler;
-use ErrorTransmitting\Handler\Other;
+use Syntony\Drive\Think;
+use Syntony\Exception\DriveNotFindException;
+use Syntony\Handler\Handler;
+use Syntony\Handler\Other;
 
 class GetFramework
 {

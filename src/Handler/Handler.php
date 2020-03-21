@@ -9,11 +9,11 @@
  */
 
 
-namespace ErrorTransmitting\Handler;
+namespace Syntony\Handler;
 
 
-use ErrorTransmitting\Exception\NotErrorException;
-use ErrorTransmitting\ExceptionEcho;
+use Syntony\Exception\NotErrorException;
+
 
 /**
  * 处理方法的基类
@@ -23,7 +23,7 @@ use ErrorTransmitting\ExceptionEcho;
 abstract class Handler
 {
     /**
-     * @var  \think\Exception 错误类型
+     * @var  \Exception 错误类型
      */
     protected $error;
     /**
@@ -154,7 +154,6 @@ abstract class Handler
         $data['param'] = $this->getParam();
         $data['response'] = $this->getResponse();
         $data['sql_error'] = $this->getPdoError();
-        $data['file'] = $this->getFile();
         $data['file'] = $this->getFile();
         $data['code'] = $this->getCode();
         $data['line'] = $this->getLine();

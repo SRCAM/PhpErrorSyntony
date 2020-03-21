@@ -1,7 +1,7 @@
 <?php
 
 
-namespace ErrorTransmitting\Handler;
+namespace Syntony\Handler;
 
 
 /**

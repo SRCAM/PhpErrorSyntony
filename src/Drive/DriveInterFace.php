@@ -1,7 +1,7 @@
 <?php
 
 
-namespace ErrorTransmitting\Drive;
+namespace Syntony\Drive;
 
 
 interface DriveInterFace
