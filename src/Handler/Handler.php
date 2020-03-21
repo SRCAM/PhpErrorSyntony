@@ -171,7 +171,7 @@ abstract class Handler
         if (!$this->config) {
             throw new NotFindConfigException('config 不存在');
         }
-        if (!isset($this->config['showType'])) {
+        if (!isset($this->config['show_type'])) {
             throw new NotFindConfigException('config.showType not find ');
         }
     }
