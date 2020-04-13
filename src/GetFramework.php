@@ -50,20 +50,6 @@ class GetFramework
      */
     private function searchFramework()
     {
-        //查询是否是thinkphp 框架
-        if (class_exists(\think\App::class)) {
-            $this->frameworkName = 'Think';
-            $this->framework = \think\App::class;
-        }
-        //如果没有可以预处理的框架
-        if (!isset($this->drive[$this->frameworkName])) {
-            return new Other();
-        } else {
-            $classSpace = $this->drive[$this->frameworkName];
-        }
-        //加载框架驱动
-        $classSpace = new $classSpace();
-        $framework = $classSpace->load($this->framework);
-        return $framework;
+        return new Other();
     }
 }
