@@ -87,7 +87,6 @@ class Http
             return '';
         }
     }
-
     /**
      * 不存在方法捕获
      * @param $name
