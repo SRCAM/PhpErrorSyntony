@@ -1,7 +1,7 @@
 <?php
 
 
-namespace ErrorTransmitting\Handler;
+namespace Syntony\Handler;
 
 
 /**
@@ -20,21 +20,6 @@ class Other extends Handler
         return array_merge($_POST, $_GET);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function handler()
-    {
-        return true;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getResponse()
-    {
-        return [];
-    }
 
     /**
      * @inheritDoc
@@ -100,7 +85,6 @@ class Other extends Handler
         if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
             $url = 'https://';
         }
-
         // 判断端口
         if ($_SERVER['SERVER_PORT'] != '80') {
             $url .= $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . ':' . $_SERVER['REQUEST_URI'];
@@ -109,5 +93,13 @@ class Other extends Handler
         }
 
         return $url;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function selfHandler()
+    {
+        return true;
     }
 }

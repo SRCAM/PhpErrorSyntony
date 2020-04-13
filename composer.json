@@ -1,5 +1,5 @@
 {
-    "name": "saber/error-transmitting",
+    "name": "srcam/php-error-syntony",
     "description":"错误信息回报系统",
     "authors": [
         {
@@ -9,7 +9,8 @@
     ],
     "require": {
         "guzzlehttp/guzzle": "^6.5",
-        "php": ">=7.0"
+        "php": ">=7.0",
+        "filp/whoops": "^2.6@dev"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master"
@@ -18,7 +19,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "ErrorTransmitting\\": "src/"
+            "Syntony\\": "src/"
         }
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace ErrorTransmitting\Dispatch;
+namespace Syntony\Dispatch;
 
-use ErrorTransmitting\Exception\NotFindConfigException;
+use Syntony\Exception\NotFindConfigException;
 
 class Http
 {

@@ -1,18 +1,12 @@
 <?php
 
 
-namespace ErrorTransmitting;
+namespace Syntony;
 
-use ErrorTransmitting\Exception\DriveNotFindException;
-use ErrorTransmitting\Exception\HandlerNotFindException;
-use ErrorTransmitting\Exception\NotErrorException;
-use ErrorTransmitting\Exception\NotFindConfigException;
-use ErrorTransmitting\Handler\Other;
+use Syntony\Exception\DriveNotFindException;
 
 class Factory
 {
-    //错误类型
-    private $error;
     //实例化
     private static $instance;
 
@@ -84,9 +78,13 @@ class Factory
         //获取框架信息
         $this->framework = GetFramework::create()->get();
         //处理错误信息
-        $this->framework->setError($error)->handler();
+        $this->framework->setError($error)
+            ->setConfig($this->config)
+            ->handler();
+
         //获取错误信息集
         $this->data = $this->framework->toArray();
+
         return new Dispatch($this->data, $this->config);
     }
 }

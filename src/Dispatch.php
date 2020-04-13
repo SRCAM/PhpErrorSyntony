@@ -1,11 +1,11 @@
 <?php
 
 
-namespace ErrorTransmitting;
+namespace Syntony;
 
 
-use ErrorTransmitting\Dispatch\Http;
-use ErrorTransmitting\Exception\NotFindConfigException;
+use Syntony\Dispatch\Http;
+use Syntony\Exception\NotFindConfigException;
 
 /**
  * 错误信息发送方法
@@ -23,6 +23,7 @@ class Dispatch
     {
         $this->data = $data;
         $this->config = $config;
+        $this->setHttpCode();
     }
 
 
@@ -53,6 +54,16 @@ class Dispatch
         //全部小写
         $method = strtolower($http['method']);
         //发送请求
+
         return Http::getInstance()->setUrl($http['url'])->$method($this->data);
+    }
+
+    /**
+     * 设置httpCode
+     * @return int
+     */
+    private function setHttpCode()
+    {
+        return http_response_code(200);
     }
 }
